@@ -37,7 +37,7 @@ def build_transforms(cfg, is_train=True):
     transform = T.Compose(
         [
             T.Resize(min_size, max_size, restrict=fix_res),
-            T.RandomHorizontalFlip(flip_horizontal_prob),
+            # T.RandomHorizontalFlip(flip_horizontal_prob),
             T.ToTensor(),
             normalize_transform,
         ]

@@ -9,7 +9,7 @@ import torch
 from tqdm import tqdm
 from collections import defaultdict
 
-from maskrcnn_benchmark.data.datasets.evaluation import evaluate, im_detect_bbox_aug
+from maskrcnn_benchmark.data.datasets.evaluation import evaluate, im_detect_bbox_aug, torchmetrics_evaluate
 from ..utils.comm import is_main_process
 from ..utils.comm import all_gather
 from ..utils.comm import synchronize
@@ -99,6 +99,7 @@ def inference_default(
         expected_results_sigma_tol=expected_results_sigma_tol,
     )
     return evaluate(dataset=dataset, predictions=predictions, output_folder=output_folder, **extra_args)
+    # return torchmetrics_evaluate(dataset=dataset, predictions=predictions, output_folder=output_folder, **extra_args)
 
 
 def clean_name(name):
@@ -495,6 +496,14 @@ def inference(
                     output = model(images, captions=captions, positive_map=positive_map_label_to_token)
                     output = [o.to(cpu_device) for o in output]
 
+                    SD = model.state_dict()
+                    with open('results/tmp.csv', 'w') as f:
+                        for key in SD.keys():
+                            if SD[key].dtype == torch.int64:
+                                f.write(f"{key},0,{SD[key].max():.3f},{SD[key].min():.3f}\n")
+                            else:
+                                f.write(f"{key},{SD[key].mean():.3f},{SD[key].max():.3f},{SD[key].min():.3f}\n")
+
                     if "flickr" in cfg.DATASETS.TEST[0]:
                         output = output[0]
                         new_output = flickr_post_process(
@@ -607,6 +616,7 @@ def inference(
     )
 
     predictions = _accumulate_predictions_from_multiple_gpus(predictions)
+    print('prediction sahpe:', len(predictions))
     print("Accumulated results")
     if not is_main_process():
         return None
@@ -620,4 +630,5 @@ def inference(
         expected_results=expected_results,
         expected_results_sigma_tol=expected_results_sigma_tol,
     )
-    return evaluate(dataset=dataset, predictions=predictions, output_folder=output_folder, **extra_args)
+    return torchmetrics_evaluate(dataset=dataset, predictions=predictions, output_folder=output_folder, **extra_args)
+    # return evaluate(dataset=dataset, predictions=predictions, output_folder=output_folder, **extra_args)

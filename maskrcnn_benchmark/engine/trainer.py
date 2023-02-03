@@ -264,7 +264,10 @@ def do_train(
                         verbose=False
                     )
                     if is_main_process():
-                        eval_result = _result[0].results['bbox']['AP']
+                        # print("checking!!!", _result[0])
+                        # print(_result[0].__dir__())
+                        # eval_result = _result[0].results['bbox']['AP']
+                        eval_result = _result[0]['map']
             else:
                 results_dict = {}
                 cpu_device = torch.device("cpu")

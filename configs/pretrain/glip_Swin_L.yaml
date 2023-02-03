@@ -58,8 +58,10 @@ MODEL:
 
 DATASETS:
 
-  TRAIN: ("mixed_train_no_coco",) # Place holder dataset for now. To be updated in the next version
-  TEST: ("coco_2017_val", )
+  # TRAIN: ("mixed_train_no_coco",) # Place holder dataset for now. To be updated in the next version
+  # TEST: ("coco_2017_val", )
+  TRAIN: ("nightowls_val",)
+  TEST: ("nightowls_val",)
 
   ONE_HOT: False
   FLICKR_COPY: 8 # 0.15 * 8 = ~1.2M
@@ -88,10 +90,10 @@ DATASETS:
 INPUT:
   PIXEL_MEAN: [ 103.530, 116.280, 123.675 ]
   PIXEL_STD: [ 57.375, 57.120, 58.395 ]
-  MIN_SIZE_TRAIN: 800
-  MAX_SIZE_TRAIN: 1333
-  MIN_SIZE_TEST: 800
-  MAX_SIZE_TEST: 1333
+  MIN_SIZE_TRAIN: 640
+  MAX_SIZE_TRAIN: 1024
+  MIN_SIZE_TEST: 640
+  MAX_SIZE_TEST: 1024
 
 AUGMENT:
   MULT_MIN_SIZE_TRAIN: (480,560,640,720,800)
@@ -118,3 +120,4 @@ SOLVER:
     CLIP_TYPE: "full_model"
     CLIP_VALUE: 1.0
     NORM_TYPE: 2.0
+num_gpus: 1

@@ -167,8 +167,8 @@ class Normalize(object):
         self.format = format.lower()
 
     def __call__(self, image, target):
-        if 'bgr' in self.format:
-            image = image[[2, 1, 0]]
+        # if 'bgr' in self.format:
+        #     image = image[[2, 1, 0]]
         if '255' in self.format:
             image = image * 255
         image = F.normalize(image, mean=self.mean, std=self.std)

@@ -1,5 +1,6 @@
 from maskrcnn_benchmark.data import datasets
 
+from .torch_met import torchmetrics_evaluation
 from .coco import coco_evaluation
 from .voc import voc_evaluation
 from .vg import vg_evaluation
@@ -54,3 +55,10 @@ def evaluate_mdetr(dataset, predictions, output_folder, cfg):
     else:
         dataset_name = dataset.__class__.__name__
         raise NotImplementedError("Unsupported dataset type {}.".format(dataset_name))
+
+
+def torchmetrics_evaluate(dataset, predictions, output_folder, **kwargs):
+    args = dict(
+        dataset=dataset, predictions=predictions, output_folder=output_folder, **kwargs
+    )
+    return torchmetrics_evaluation(**args)

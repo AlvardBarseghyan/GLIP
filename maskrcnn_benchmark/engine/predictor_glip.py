@@ -144,10 +144,10 @@ class GLIPDemo(object):
         if self.show_mask_heatmaps:
             return self.create_mask_montage(result, top_predictions)
         result = self.overlay_boxes(result, top_predictions)
-        result = self.overlay_entity_names(result, top_predictions)
+        result, txt = self.overlay_entity_names(result, top_predictions)
         if self.cfg.MODEL.MASK_ON:
             result = self.overlay_mask(result, top_predictions)
-        return result, top_predictions
+        return result, top_predictions, txt
 
     def visualize_with_predictions(self, 
             original_image, 
@@ -344,12 +344,12 @@ class GLIPDemo(object):
                     y -= text_offset
 
             cv2.putText(
-                image, s, (int(x), int(y)-text_offset_original), cv2.FONT_HERSHEY_SIMPLEX, text_size, (self.color, self.color, self.color), text_pixel, cv2.LINE_AA
+                image, s, (int(x), int(y)-text_offset_original), cv2.FONT_HERSHEY_SIMPLEX, text_size, (255, 255, 255), text_pixel, cv2.LINE_AA
             )
             previous_locations.append((int(x), int(y)))
 
 
-        return image
+        return image, new_labels
 
     def overlay_mask(self, image, predictions):
         masks = predictions.get_field("mask").numpy()

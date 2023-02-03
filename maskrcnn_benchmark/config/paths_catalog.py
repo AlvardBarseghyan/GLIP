@@ -204,6 +204,26 @@ class DatasetCatalog(object):
             "img_dir": "coco/val2014",
             "ann_file": "coco/annotations/instances_minival2014.json"
         },
+        "nightowls_val_grounding": {
+                "img_dir": "/mnt/2tb/hrant/nightowls/val",
+                "ann_file": "/home/barseghyan/Projects/GLIP/annotations/nightowls/val/annotations_nightowls_coco.json"
+        },
+        "nightowls_val": {
+                "img_dir": "/mnt/2tb/hrant/nightowls/val",
+                "ann_file": "/home/barseghyan/Projects/GLIP/annotations/nightowls/val/annotations_nightowls_coco.json"
+        },
+        "fair1m_train": {
+                "img_dir": "/mnt/2tb/hrant/FAIR1M/fair1m_1000/train1000/images/",
+                "ann_file": "/mnt/2tb/hrant/FAIR1M/fair1m_1000/train1000/few_shot_8.json"
+        },
+        "fair1m_train_grounding": {
+                "img_dir": "/mnt/2tb/hrant/FAIR1M/fair1m_1000/train1000/images/",
+                "ann_file": "/mnt/2tb/hrant/FAIR1M/fair1m_1000/train1000/few_shot_8.json"
+        },
+        "fair1m_val": {
+                "img_dir": "/mnt/2tb/hrant/FAIR1M/fair1m_1000/val1000/images/",
+                "ann_file": "/mnt/2tb/hrant/FAIR1M/fair1m_1000/val1000/few_shot_8.json"
+        },
     }
 
     @staticmethod
